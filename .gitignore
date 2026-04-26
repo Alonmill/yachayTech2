@@ -29,7 +29,6 @@ publish/
 
 ## Archivos generados
 Generated/
-wwwroot/lib/
 
 ## Certificados / secretos locales
 appsettings.Development.json

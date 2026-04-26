@@ -1,0 +1,48 @@
+## Carpetas de compilación
+bin/
+obj/
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Rider / JetBrains
+.idea/
+
+## VS Code
+.vscode/
+
+## Archivos temporales
+*.tmp
+*.temp
+*.log
+
+## Paquetes NuGet
+packages/
+*.nupkg
+
+## Publicaciones
+publish/
+
+## Archivos generados
+Generated/
+wwwroot/lib/
+
+## Certificados / secretos locales
+appsettings.Development.json
+secrets.json
+
+## Base de datos local
+*.mdf
+*.ldf
+
+## Caché
+*.cache
+
+## Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini

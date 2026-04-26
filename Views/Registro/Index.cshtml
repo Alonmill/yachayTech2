@@ -1,0 +1,49 @@
+﻿@model YachayTech_p_cov.Models.Usuario
+
+@{
+    ViewData["Title"] = "Registro de Participante";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8 col-xl-7">
+        <div class="card voc-card">
+            <div class="voc-card-header">
+                <p class="voc-eyebrow mb-2">Inicio de evaluación</p>
+                <h2 class="h3 mb-2">Registro para test vocacional profesional</h2>
+                <p class="text-muted mb-0">Completa tus datos para iniciar una experiencia guiada de orientación tecnológica.</p>
+            </div>
+
+
+            <div class="card-body p-4 p-lg-5">
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger border-0 border-start border-4 border-danger shadow-sm">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <form asp-action="Index" method="post" class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Nombre</label>
+                        <input type="text" asp-for="Nombre" class="form-control form-control-lg" required />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label text-muted">Apellido</label>
+                        <input type="text" asp-for="Apellido" class="form-control form-control-lg" required />
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label text-muted">Correo institucional</label>
+                        <input type="email" asp-for="Correo" class="form-control form-control-lg" placeholder="usuario@cibertec.edu.pe" required />
+                        <div class="form-text">Por seguridad, solo se admiten dominios institucionales válidos.</div>
+                    </div>
+
+                    <div class="col-12 d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Comenzar evaluación</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@model Pregunta
+
+@{
+    ViewData["Title"] = "Evaluación vocacional";
+    var progreso = Math.Min(100, (Model.Id * 25));
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-xl-8">
+        <div class="card voc-card">
+            <div class="voc-card-header">
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center mb-3">
+                    <div>
+                        <p class="voc-eyebrow mb-2">Evaluación en curso</p>
+                        <h1 class="h3 mb-1">@Model.TituloEtapa</h1>
+                        <p class="text-muted mb-0">Responde con sinceridad para construir tu perfil vocacional.</p>
+                    </div>
+                    <span class="badge rounded-pill text-bg-light border px-3 py-2 text-dark">
+                        Progreso @progreso%
+                    </span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar" role="progressbar" style="width: @progreso%;" aria-valuenow="@progreso" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+
+            <div class="card-body p-4 p-lg-5">
+                <p class="lead mb-4">@Model.Enunciado</p>
+
+                <form asp-action="Siguiente" method="post">
+                    <div class="d-grid gap-3">
+                        @foreach (var opt in Model.Opciones)
+                        {
+                            <div class="form-check p-3 p-md-4 voc-option">
+                                <input class="form-check-input" type="radio" name="respuestaCombinada"
+                                       value="@opt.Puntos|@opt.SiguientePreguntaId" id="opt-@opt.Puntos-@opt.SiguientePreguntaId" required>
+
+                                <label class="form-check-label w-100 ps-2" for="opt-@opt.Puntos-@opt.SiguientePreguntaId">
+                                    <strong>@opt.Texto</strong>
+                                </label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4 pt-2">
+                        <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Anterior</button>
+                        <button type="submit" class="btn btn-primary px-4">Siguiente</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

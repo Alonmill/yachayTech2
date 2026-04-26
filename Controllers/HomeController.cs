@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using YachayTech_p_cov.Data;
 
 namespace YachayTech_p_cov.Controllers
 {
+    [Authorize(Roles = "Usuario,Admin")]
     public class HomeController : Controller
     {
         private readonly EvaluacionContext _context;
@@ -29,6 +31,7 @@ namespace YachayTech_p_cov.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Siguiente(string respuestaCombinada)
         {
             if (string.IsNullOrEmpty(respuestaCombinada)) return RedirectToAction("Index");
@@ -43,7 +46,7 @@ namespace YachayTech_p_cov.Controllers
 
             // Si el siguienteId es un marcador de final (ej: 0 o 99), ir a resultados
             if (siguienteId == 4)
-            { 
+            {
                 return RedirectToAction("Resultado");
             }
 
@@ -69,11 +72,11 @@ namespace YachayTech_p_cov.Controllers
                     UsuarioId = usuarioId.Value,
                     PuntajeTotal = puntajeFinal,
                     CategoriaAsignada = categoria,
-                    FechaPrueba = DateTime.Now
+                    FechaPrueba = DateTime.UtcNow
                 };
 
                 _context.Resultados.Add(nuevoResultado);
-                _context.SaveChanges(); // ¡Impacto en SQL Server!
+                _context.SaveChanges();
             }
 
             // 3. Enviamos los datos a la vista
@@ -91,6 +94,7 @@ namespace YachayTech_p_cov.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

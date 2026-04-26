@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YachayTech_p_cov.Data;
 
@@ -11,9 +12,11 @@ using YachayTech_p_cov.Data;
 namespace YachayTech_p_cov.Migrations
 {
     [DbContext(typeof(EvaluacionContext))]
-    partial class EvaluacionContextModelSnapshot : ModelSnapshot
+    [Migration("20260426052228_AgregarAuthenticacionYRoles")]
+    partial class AgregarAuthenticacionYRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

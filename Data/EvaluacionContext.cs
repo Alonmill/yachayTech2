@@ -20,6 +20,15 @@ namespace YachayTech_p_cov.Data
             base.OnModelCreating(modelBuilder);
 
             // 1. Sembrar Preguntas
+            modelBuilder.Entity<Usuario>()
+            .HasIndex(u => u.Correo)
+            .IsUnique();
+
+            modelBuilder.Entity<Usuario>()
+                .Property(u => u.Rol)
+                .HasDefaultValue("Usuario");
+
+
             modelBuilder.Entity<Pregunta>().HasData(
                 new Pregunta { Id = 1, TituloEtapa = "Alineación de Perfil Tecnológico", Enunciado = "¿Qué te apasiona más de la tecnología?" },
                 new Pregunta { Id = 2, TituloEtapa = "Estrategia de Desarrollo", Enunciado = "¿Qué lenguaje prefieres para Backend?" },

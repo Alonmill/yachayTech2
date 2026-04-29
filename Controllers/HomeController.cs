@@ -10,6 +10,7 @@ namespace YachayTech_p_cov.Controllers
     [Authorize(Roles = "Usuario,Admin")]
     public class HomeController : Controller
     {
+        private const int MarcadorFinTest = 0;
         private readonly EvaluacionContext _context;
         private readonly ILogger<HomeController> _logger;
 
@@ -27,6 +28,8 @@ namespace YachayTech_p_cov.Controllers
 
             if (pregunta == null || !pregunta.Opciones.Any()) return RedirectToAction("Resultado");
 
+            var totalPreguntas = _context.Preguntas.Count();
+            ViewBag.TotalPreguntas = totalPreguntas;
             return View(pregunta);
         }
 
@@ -45,7 +48,7 @@ namespace YachayTech_p_cov.Controllers
             HttpContext.Session.SetInt32("Score", puntajeActual + puntosSeleccionados);
 
             // Si el siguienteId es un marcador de final (ej: 0 o 99), ir a resultados
-            if (siguienteId == 4)
+            if (siguienteId == MarcadorFinTest)
             {
                 return RedirectToAction("Resultado");
             }
@@ -60,12 +63,18 @@ namespace YachayTech_p_cov.Controllers
             int? usuarioId = HttpContext.Session.GetInt32("UsuarioActivoId");
 
             // 2. Si hay un usuario logueado, guardamos su resultado en la Base de Datos
+            string categoria = puntajeFinal switch
+            {
+                >= 45 => "Ingeniería en Inteligencia Artificial",
+                >= 38 => "Ingeniería de Software",
+                >= 30 => "Ciencia de Datos",
+                >= 22 => "Ciberseguridad",
+                _ => "Sistemas y Soporte TI"
+            }
+            ;
+
             if (usuarioId.HasValue)
             {
-                // Lógica temporal de clasificación (se refinará en el Sprint 3 cuando separes puntajes por rama)
-                string categoria = puntajeFinal >= 12 ? "Especialista (Desarrollo/IA)" :
-                                   puntajeFinal >= 8 ? "Innovador (I+D)" :
-                                   "Explorador Tecnológico";
 
                 var nuevoResultado = new ResultadoEvaluacion
                 {
@@ -81,6 +90,7 @@ namespace YachayTech_p_cov.Controllers
 
             // 3. Enviamos los datos a la vista
             ViewBag.PuntajeTotal = puntajeFinal;
+            ViewBag.Perfil = categoria;
 
             // 4. Limpiamos SOLO el puntaje para que pueda hacer el test de nuevo si quiere, 
             // pero NO borramos el UsuarioActivoId, para no obligarlo a registrarse otra vez.

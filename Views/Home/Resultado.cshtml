@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Resultado del Test";
     var puntaje = (int?)ViewBag.PuntajeTotal ?? 0;
-    var perfil = puntaje >= 12 ? "Especialista (Desarrollo/IA)" : puntaje >= 8 ? "Innovador (I+D)" : "Explorador Tecnológico";
+    var perfil = (string?)ViewBag.Perfil ?? "Sistemas y Soporte TI";
 }
 
 <div class="row justify-content-center">

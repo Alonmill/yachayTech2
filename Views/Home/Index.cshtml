@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Evaluación vocacional";
-    var progreso = Math.Min(100, (Model.Id * 25));
+    var totalPreguntas = (int?)ViewBag.TotalPreguntas ?? 10;
+    var progreso = Math.Min(100, (int)Math.Round((Model.Id * 100.0) / totalPreguntas));
 }
 
 <div class="row justify-content-center">
@@ -33,9 +34,9 @@
                         {
                             <div class="form-check p-3 p-md-4 voc-option">
                                 <input class="form-check-input" type="radio" name="respuestaCombinada"
-                                       value="@opt.Puntos|@opt.SiguientePreguntaId" id="opt-@opt.Puntos-@opt.SiguientePreguntaId" required>
+                                       value="@opt.Puntos|@opt.SiguientePreguntaId" id="opt-@opt.Id" required>
 
-                                <label class="form-check-label w-100 ps-2" for="opt-@opt.Puntos-@opt.SiguientePreguntaId">
+                                <label class="form-check-label w-100 ps-2" for="opt-@opt.Id">
                                     <strong>@opt.Texto</strong>
                                 </label>
                             </div>
